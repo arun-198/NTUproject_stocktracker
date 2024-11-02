@@ -1,0 +1,71 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CI Workflow
+
+on:
+  push:
+    branches:
+      - "main"
+      - "develop"
+      - "release/*"   # Supports multiple release branches
+  pull_request:
+    branches:
+      - "main"
+      - "develop"
+
+jobs:
+  # Job for testing and building on develop branch
+  ci-develop:
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+
+  # Job for building and deploying on main branch
+  build-and-deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+    - run: npm run build --if-present
+    - name: Deploy to Production
+      run: echo "Deploying to production..."
+      run: npm run deploy -- -m "Deploy React app to GitHub Pages"
+      # Add your deployment steps here, e.g., uploading files or pushing Docker images
+
+  # Job for pre-release tasks on release branches
+  pre-release:
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+    - run: npm run build --if-present
+    - name: Tag Release
+      run: |
+        VERSION=$(node -p "require('./package.json').version")
+        git tag -a "v$VERSION" -m "Release $VERSION"
+        git push origin "v$VERSION"
+    - name: Prepare Release Notes
+      run: echo "Preparing release notes..."
