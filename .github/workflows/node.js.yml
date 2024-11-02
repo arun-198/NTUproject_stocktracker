@@ -45,6 +45,7 @@ jobs:
     - run: npm run build --if-present
     - name: Deploy to Production
       run: echo "Deploying to production..."
+      run: npm run deploy -- -m "Deploy React app to GitHub Pages"
       # Add your deployment steps here, e.g., uploading files or pushing Docker images
 
   # Job for pre-release tasks on release branches
