@@ -22,7 +22,8 @@ const Header = () => {
           <Heading 
             ml="8" fontSize="1.5em" fontWeight="semibold" color="white" marginLeft={0}>o</Heading>
           <IconButton aria-label="Login" 
-                      marginTop={5} marginLeft={"60%"} 
+                      marginTop={5} 
+                      marginLeft={"60%"} 
                       icon={<IoPersonCircleOutline size={"2em"} ></IoPersonCircleOutline> } 
                       onClick={handleNavigation}
                       backgroundColor={"transparent"}></IconButton>
