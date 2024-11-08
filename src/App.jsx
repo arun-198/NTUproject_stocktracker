@@ -3,14 +3,16 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 import Header from './Header';
-import Portfolio from './Portfolio';
+import Portfolio from './pages/Portfolio';
 import AddStock from './AddStock';
-import AboutUs from './components/AboutUs';
-import ContactUs from './components/ContactUs';
-import LogIn from './LogIn';
-import StockCalculator from './StockCalculator';
-import UserProfile from './UserProfile';
-import Dividend from './Dividend'
+import AboutUs from './pages/News';
+import ContactUs from './pages/ContactUs';
+import LogIn from './pages/LogIn';
+import StockCalculator from './pages/StockCalculator';
+import UserProfile from './pages/UserProfile';
+import Dividend from './pages/Dividend'
+
+// import { Heading } from '@chakra-ui/react';
 
 const API_KEY = 'YOUR_FINNHUB_API_KEY'; // Finnhub API key 
 //const API_KEY = 'xyz'; // Finnhub API key
@@ -130,20 +132,20 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <nav>
+        <nav className='navBar'>
           <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/portfolio">Portfolio</Link></li>
-            <li><Link to="/about">News</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
-            <li><Link to="/login">Log In</Link></li>
-            <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/stockcalculator">P&L</Link></li>
-            <li><Link to="/dividend">dividend</Link></li>
+            <li><Link to="/pnl">P&L</Link></li>
+            <li><Link to="/dividend">Dividend</Link></li><li><Link to="/news">News</Link></li>
+            <li><Link to="/contactus">Contact Us</Link></li>
+            {/* <li><Link to="/login">Log In</Link></li>
+            <li><Link to="/profile">Profile</Link></li> */}
+            
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<div>Welcome to the Stock Portfolio App!</div>} />
+          <Route path="/" element={<div className='homeBar'>Welcome to the <br></br>Stock Portfolio App!</div>} />
           <Route path="/portfolio" element={
             <>
               <AddStock handleAdd={handleAddStock} />
@@ -151,14 +153,16 @@ function App() {
               <Portfolio stocks={sortedStocks} handleDelete={handleDeleteStock} requestSort={requestSort} sortConfig={sortConfig} />
             </>
           } />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/news" element={<AboutUs />} />
+          <Route path="/contactus" element={<ContactUs />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/stockcalculator" element={<StockCalculator />} />
+          <Route path="/pnl" element={<StockCalculator />} />
           <Route path="/dividend" element={<Dividend />} />
         </Routes>
       </div>
+  
+    
     </Router>
   );
 }

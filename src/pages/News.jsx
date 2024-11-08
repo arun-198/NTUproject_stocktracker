@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import styles from './AboutUs.module.css';
-import NewsTable from './newsTable';
+import styles from '../styles/News.module.css';
+import NewsTable from '../components/newsTable';
 // import { dummyNewsData } from './dummyNewsData';
 import getNews from '../api/getNews';
 import { finNews } from '../dummyData/getFinNews';
-import InputStock from './InputStock';
+import InputStock from '../components/InputStock';
 import { stockNews } from '../dummyData/stockNews';
 
 const AboutUs = () => {

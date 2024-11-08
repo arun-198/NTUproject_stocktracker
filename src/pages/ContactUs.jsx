@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Joi from "joi";
-import "./ContactUs.css";
+import "../styles/ContactUs.css";
 
 const ContactUs = () => {
     const [name, setName] = useState("");

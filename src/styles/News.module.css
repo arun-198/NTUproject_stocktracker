@@ -11,21 +11,21 @@
   }
 
   .button {
-    min-width: 3rem;
+    min-width: 10rem;
     margin: 1rem;
     padding: 0.5rem;
-    background-color: #c4d4f0; /* Make background transparent */
+    background-color: #0da7a7; /* Make background transparent */
     border: 2px solid transparent; /* Make border transparent */
     border-radius: 10px;
-    color: black;
+    color: white;
     transition-duration: 0.3s;
     align-self: center;
   }
   
   .button:hover {
-    background-color: #d7e4f8; /* Show background color on hover */
-    border-color: #5287e3; /* Show border color on hover */
-    color: black;
+    background-color: #31c9c1; /* Show background color on hover */
+    border-color: #31c9c1; /* Show border color on hover */
+    color: white;
   }
 
   .news-container {

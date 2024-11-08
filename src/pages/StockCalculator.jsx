@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './StockCalculator.css';
+import '../styles/StockCalculator.css';
 
 
  // Replace with your actual API key
