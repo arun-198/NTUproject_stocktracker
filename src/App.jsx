@@ -4,17 +4,19 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './App.css';
 import Header from './Header';
 import Portfolio from './pages/Portfolio';
-import AddStock from './AddStock';
+import AddStock from './pages/AddStock';
 import AboutUs from './pages/News';
 import ContactUs from './pages/ContactUs';
 import LogIn from './pages/LogIn';
 import StockCalculator from './pages/StockCalculator';
 import UserProfile from './pages/UserProfile';
-import Dividend from './pages/Dividend'
+import Dividend from './pages/Dividend';
+import stockPortfolioImage from './images/stock_logo.png';
+import { Flex } from '@chakra-ui/react';
 
 // import { Heading } from '@chakra-ui/react';
 
-const API_KEY = 'YOUR_FINNHUB_API_KEY'; // Finnhub API key 
+const API_KEY = import.meta.env.VITE_API_KEY; // Finnhub API key 
 //const API_KEY = 'xyz'; // Finnhub API key
 
 const dummyData = [
@@ -52,18 +54,24 @@ const dummyData = [
 
 function App() {
   const [stocks, setStocks] = useState(dummyData);
-  const [sortConfig, setSortConfig] = useState({ key: 'Name', direction: 'ascending' });
+  const [sortConfig, setSortConfig] = useState({
+    key: "Name",
+    direction: "ascending",
+  });
+  const [shouldFetch, setShouldFetch] = useState(true); // New state to control API calls
 
   const fetchStockData = useCallback(async (symbol) => {
     try {
       console.log(`Fetching data for symbol: ${symbol}`);
-      const response = await axios.get(`https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`);
+      const response = await axios.get(
+        `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
+      );
       console.log(response.data); // Log the response to see the data structure
       if (response.data.c) {
         const latestPrice = response.data.c;
         return {
           close: latestPrice,
-          symbol
+          symbol,
         };
       } else {
         console.error(`No data found for symbol: ${symbol}`);
@@ -71,24 +79,30 @@ function App() {
       }
     } catch (error) {
       console.error(`Error fetching data for symbol: ${symbol}`, error);
+      setShouldFetch(false); // Stop further fetching on error
       return { close: null, symbol };
     }
   }, []);
 
   const fetchData = useCallback(async () => {
-    console.log('Fetching data for all stocks');
+    if (!shouldFetch) {
+      console.warn("Skipping fetch due to previous error.");
+      return;
+    }
+
+    console.log("Fetching data for all stocks");
     const updatedStocks = await Promise.all(
       stocks.map(async (stock) => {
         const result = await fetchStockData(stock.Symbol);
         return {
           ...stock,
-          Price: result.close !== null ? result.close : stock.Price // Use the price from dummyData if API call fails
+          Price: result.close !== null ? result.close : stock.Price, // Use the price from dummyData if API call fails
         };
       })
     );
-    console.log('Updated Stocks:', updatedStocks); // Log updated stocks to verify state
+    console.log("Updated Stocks:", updatedStocks); // Log updated stocks to verify state
     setStocks(updatedStocks);
-  }, [stocks, fetchStockData]);
+  }, [stocks, fetchStockData, shouldFetch]);
 
   useEffect(() => {
     fetchData();
@@ -112,47 +126,89 @@ function App() {
 
   const sortedStocks = [...stocks].sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? -1 : 1;
+      return sortConfig.direction === "ascending" ? -1 : 1;
     }
     if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === 'ascending' ? 1 : -1;
+      return sortConfig.direction === "ascending" ? 1 : -1;
     }
     return 0;
   });
 
   const requestSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
     }
     setSortConfig({ key, direction });
   };
 
   return (
     <Router>
-      <div className="App">
+      <div className="MainApp" >
         <Header />
-        <nav className='navBar'>
+        <nav className="navBar">
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/portfolio">Portfolio</Link></li>
-            <li><Link to="/pnl">P&L</Link></li>
-            <li><Link to="/dividend">Dividend</Link></li><li><Link to="/news">News</Link></li>
-            <li><Link to="/contactus">Contact Us</Link></li>
-            {/* <li><Link to="/login">Log In</Link></li>
-            <li><Link to="/profile">Profile</Link></li> */}
-            
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/portfolio">Portfolio</Link>
+            </li>
+            <li>
+              <Link to="/pnl">P&L</Link>
+            </li>
+            <li>
+              <Link to="/dividend">Dividend</Link>
+            </li>
+            <li>
+              <Link to="/news">News</Link>
+            </li>
+            <li>
+              <Link to="/contactus">Contact Us</Link>
+            </li>
           </ul>
         </nav>
         <Routes>
-          <Route path="/" element={<div className='homeBar'>Welcome to the <br></br>Stock Portfolio App!</div>} />
-          <Route path="/portfolio" element={
-            <>
-              <AddStock handleAdd={handleAddStock} />
-              <button className="refresh-button" onClick={handleRefresh}>Refresh Prices</button>
-              <Portfolio stocks={sortedStocks} handleDelete={handleDeleteStock} requestSort={requestSort} sortConfig={sortConfig} />
-            </>
-          } />
+          <Route
+            path="/"
+            element={
+              <div className="homeBar">
+                <div>
+                  Welcome to the <br />
+                  Stock Portfolio App!
+                </div>
+                <img
+                  src={stockPortfolioImage}
+                  alt="Stock Portfolio"
+                  style={{
+                    marginTop: "20px",
+                    maxWidth: "10%",
+                    height: "auto",
+                    display: "block",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                />
+              </div>
+            }
+          />
+          <Route
+            path="/portfolio"
+            element={
+              <>
+                <AddStock handleAdd={handleAddStock} />
+                <button className="refresh-button" onClick={handleRefresh}>
+                  Refresh Prices
+                </button>
+                <Portfolio
+                  stocks={sortedStocks}
+                  handleDelete={handleDeleteStock}
+                  requestSort={requestSort}
+                  sortConfig={sortConfig}
+                />
+              </>
+            }
+          />
           <Route path="/news" element={<AboutUs />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/login" element={<LogIn />} />
@@ -161,8 +217,6 @@ function App() {
           <Route path="/dividend" element={<Dividend />} />
         </Routes>
       </div>
-  
-    
     </Router>
   );
 }

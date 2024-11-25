@@ -13,8 +13,8 @@ const Header = () => {
 
   return (
     
-    <VStack>
-        <Flex w="100vw" h="10vh" position="fixed" top={0} background="linear-gradient(to right, #008080 , #20B2AA)" paddingBottom={5} alignItems={"center"}>
+    <VStack height={'100%'} >
+        <Flex w="100vw"  position="relative" top={0} background="linear-gradient(to right, #008080 , #20B2AA)" paddingBottom={5} alignItems={"center"}>
           
           <Heading 
             ml="8" fontSize="1.8em" fontWeight="semibold" color="white" marginLeft={"10vw"}>Stock Portfo</Heading>

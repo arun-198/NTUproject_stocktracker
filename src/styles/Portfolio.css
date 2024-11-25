@@ -18,16 +18,19 @@
     text-align: left;
   }
   
-  button {
+  
+  
+  .portfolioButton {
     margin: 5px;
     padding: 5px 10px;
     color: white;
-    background-color: #007bff;
-    border: none;
+    background-color: #0da7a7;
+    border: 2px solid white;
+    border-radius: 5px;
     cursor: pointer;
   }
   
-  button:hover {
-    background-color: #0056b3;
+  .portfolioButton:hover {
+    background-color: #31c9c1;
   }
   

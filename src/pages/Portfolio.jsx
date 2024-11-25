@@ -11,7 +11,7 @@ const Portfolio = ({ stocks, handleDelete, requestSort, sortConfig }) => {
 
   return (
     <div className="portfolio">
-      <h2>Your Portfolio</h2>
+      <h1>Your Portfolio</h1>
       <table>
         <thead>
           <tr>
@@ -30,7 +30,7 @@ const Portfolio = ({ stocks, handleDelete, requestSort, sortConfig }) => {
               <td>{stock.Quantity}</td>
               <td>{stock.Price != null ? `$${(stock.Price * stock.Quantity).toFixed(2)}` : 'N/A'}</td>
               <td>
-                <button onClick={() => handleDelete(index)}>Delete</button>
+                <button className="portfolioButton" onClick={() => handleDelete(index)}>Delete</button>
               </td>
             </tr>
           ))}

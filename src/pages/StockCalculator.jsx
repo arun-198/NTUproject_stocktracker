@@ -11,7 +11,7 @@ import '../styles/StockCalculator.css';
   const [numShares, setNumShares] = useState('');
   const [stocks, setStocks] = useState([]);
   const [error, setError] = useState('');
-  const API_KEY = 'cqbul4hr01qmbcu8st5gcqbul4hr01qmbcu8st60';
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   const fetchStockData = async () => {
     if (parseFloat(purchasePrice) <= 0 || parseFloat(numShares) <= 0) {
@@ -55,38 +55,162 @@ import '../styles/StockCalculator.css';
   };
 
   return (
-    <div>
-      <h1>Profit or Loss Calculation</h1>
-      <div className='inputTable'>
-      <div>
-        <label>Stock Name: </label>
-        <input
-          type="text"
-          value={stockName}
-          onChange={(e) => setStockName(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Purchase Price: </label>
-        <input
-          type="number"
-          value={purchasePrice}
-          onChange={(e) => setPurchasePrice(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Number of Shares: </label>
-        <input
-          type="number"
-          value={numShares}
-          onChange={(e) => setNumShares(e.target.value)}
-        />
-      </div>
-      </div>
-     
-      
-      <button onClick={fetchStockData}>Fetch Data</button>
 
+    
+    <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "300px", // Full viewport height
+          backgroundColor: "white", // Optional background for better visibility
+        }}
+      >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          fetchStockData();
+        }}
+        style={{
+          marginTop: "80px",
+          display: "flex",
+          flexDirection: "column", // Stack elements vertically
+          alignItems: "center", // Align inputs and labels to the center
+          padding: "20px",
+          border: "1px solid #ccc",
+          borderRadius: "10px",
+          backgroundColor: "white",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          width: "400px",
+        }}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "10px" ,marginTop:"0px" ,fontSize: "1.5rem"}}>
+          Profit or Loss Calculation
+        </h2>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+           alignItems: "center",
+            marginBottom: "10px",
+            width: "100%", 
+          }}
+        >
+          <label
+            style={{
+              fontWeight: "bold",
+              width: "120px",
+              textAlign: "center",
+              marginRight: "10px",
+            }}
+          >
+            Stock:
+          </label>
+          <input
+            style={{
+              borderWidth: 1,
+              borderColor: "gray",
+              borderStyle: "solid",
+              borderRadius: 5,
+              width: "100px",
+              padding: "5px",
+            }}
+            type="text"
+            value={stockName}
+            onChange={(e) => setStockName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "10px",
+            width: "100%", 
+          }}
+        >
+          <label
+            style={{
+              fontWeight: "bold",
+              width: "120px",
+              textAlign: "center",
+              marginRight: "10px",
+            }}
+          >
+            Buy Price:
+          </label>
+          <input
+            style={{
+              borderWidth: 1,
+              borderColor: "gray",
+              borderStyle: "solid",
+              borderRadius: 5,
+              width: "100px",
+              padding: "5px",
+            }}
+            type="number"
+            value={purchasePrice}
+            onChange={(e) => setPurchasePrice(e.target.value)}
+            required
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "20px",
+            width: "100%", 
+          }}
+        >
+          <label
+            style={{
+              fontWeight: "bold",
+              width: "120px",
+              textAlign: "center",
+              marginRight: "10px",
+            }}
+          >
+            Qty:
+          </label>
+          <input
+            style={{
+              borderWidth: 1,
+              borderColor: "gray",
+              borderStyle: "solid",
+              borderRadius: 5,
+              width: "100px",
+              padding: "5px",
+            }}
+            type="number"
+            value={numShares}
+            onChange={(e) => setNumShares(e.target.value)}
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          style={{
+            width: "50%",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "5px",
+            backgroundColor: "#0da7a7",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          Fetch Data
+        </button>
+      </form>
+    </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {stocks.length > 0 && (
