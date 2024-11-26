@@ -25,7 +25,7 @@ const AboutUs = () => {
     setShowSentimentScore(false);
     try {
       setNewsIsLoading(true);
-      const response = await getNews.get("/query?function=NEWS_SENTIMENT&apikey=ZHAC5CN9YXPC94GR");
+      const response = await getNews.get("/query?function=NEWS_SENTIMENT&apikey=1XYTJIKI7X7DX44I");
       // const response = await getNews.get("/query?function=NEWS_SENTIMENT&topics=financial_markets,&apikey=ZHAC5CN9YXPC94GR");
       // const response = await getNews.get("/query");
       if (response.data && response.data.feed) {
@@ -47,7 +47,7 @@ const AboutUs = () => {
     setNewsHeaderTitle(`${stockName} News`);
     try {
       setNewsIsLoading(true);
-      const response = await getNews.get(`/query?function=NEWS_SENTIMENT&tickers=${stockName}&limit=1000&apikey=ZHAC5CN9YXPC94GR`);
+      const response = await getNews.get(`/query?function=NEWS_SENTIMENT&tickers=${stockName}&limit=1000&apikey=1XYTJIKI7X7DX44I`);
       // const response = await getNews.get("/query");
       // const response = await getNews.get("/query");
       if (response.data && response.data.feed) {
@@ -100,7 +100,7 @@ const AboutUs = () => {
     setShowSentimentScore(false);
     try {
       setNewsIsLoading(true);
-      const response = await getNews.get("/query?function=NEWS_SENTIMENT&topics=economy_macro&apikey=ZHAC5CN9YXPC94GR");
+      const response = await getNews.get("/query?function=NEWS_SENTIMENT&topics=economy_macro&apikey=1XYTJIKI7X7DX44I");
       // const response = await getNews.get("/query");
       if (response.data && response.data.feed) {
         console.log("✔ News:", response.data.feed);
@@ -123,7 +123,7 @@ const AboutUs = () => {
     setShowSentimentScore(false);
     try {
       setNewsIsLoading(true);
-      const response = await getNews.get("/query?function=NEWS_SENTIMENT&topics=technology&apikey=ZHAC5CN9YXPC94GR");
+      const response = await getNews.get("/query?function=NEWS_SENTIMENT&topics=technology&apikey=1XYTJIKI7X7DX44I");
       // const response = await getNews.get("/query");
       if (response.data && response.data.feed) {
         console.log("✔ News:", response.data.feed);

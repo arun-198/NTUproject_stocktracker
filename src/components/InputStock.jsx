@@ -12,7 +12,7 @@ function InputStock({stockName, setStockName, newsFinResponse, sentimentScore, s
         <div>
             <label className={styles.inputLabel}><b>Ticker: </b></label>
             <input className={styles.inputBox} value={stockName} onChange={handleChange} />
-            <button onClick={newsFinResponse}>
+            <button className={styles.searchButton} onClick={newsFinResponse}>
                 Search
             </button>
             <br />

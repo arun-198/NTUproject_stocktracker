@@ -82,11 +82,11 @@ import '../styles/StockCalculator.css';
           borderRadius: "10px",
           backgroundColor: "white",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          width: "400px",
+          width: "300px",
         }}
       >
         <h2 style={{ textAlign: "center", marginBottom: "10px" ,marginTop:"0px" ,fontSize: "1.5rem"}}>
-          Profit or Loss Calculation
+          Profit/Loss Calculation
         </h2>
 
         <div

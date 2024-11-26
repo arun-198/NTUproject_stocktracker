@@ -12,44 +12,16 @@ import StockCalculator from './pages/StockCalculator';
 import UserProfile from './pages/UserProfile';
 import Dividend from './pages/Dividend';
 import stockPortfolioImage from './images/stock_logo.png';
-import { Flex } from '@chakra-ui/react';
 
-// import { Heading } from '@chakra-ui/react';
-
-const API_KEY = import.meta.env.VITE_API_KEY; // Finnhub API key 
-//const API_KEY = 'xyz'; // Finnhub API key
+// Finnhub API Key
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 const dummyData = [
-  {
-    "Name": "Apple",
-    "Symbol": "AAPL",
-    "Price": 230,
-    "Quantity": 10
-  },
-  {
-    "Name": "Google",
-    "Symbol": "GOOG",
-    "Price": 182,
-    "Quantity": 15
-  },
-  {
-    "Name": "Boeing",
-    "Symbol": "BA",
-    "Price": 182,
-    "Quantity": 20
-  },
-  {
-    "Name": "Microsoft",
-    "Symbol": "MSFT",
-    "Price": 453,
-    "Quantity": 25
-  },
-  {
-    "Name": "Intel",
-    "Symbol": "INTC",
-    "Price": 34,
-    "Quantity": 30
-  }
+  { Name: "Apple", Symbol: "AAPL", Price: 230, Quantity: 10 },
+  { Name: "Google", Symbol: "GOOG", Price: 182, Quantity: 15 },
+  { Name: "Boeing", Symbol: "BA", Price: 182, Quantity: 20 },
+  { Name: "Microsoft", Symbol: "MSFT", Price: 453, Quantity: 25 },
+  { Name: "Intel", Symbol: "INTC", Price: 34, Quantity: 30 },
 ];
 
 function App() {
@@ -58,15 +30,14 @@ function App() {
     key: "Name",
     direction: "ascending",
   });
-  const [shouldFetch, setShouldFetch] = useState(true); // New state to control API calls
 
+  // Fetch data for a single stock
   const fetchStockData = useCallback(async (symbol) => {
     try {
       console.log(`Fetching data for symbol: ${symbol}`);
       const response = await axios.get(
         `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
       );
-      console.log(response.data); // Log the response to see the data structure
       if (response.data.c) {
         const latestPrice = response.data.c;
         return {
@@ -79,51 +50,58 @@ function App() {
       }
     } catch (error) {
       console.error(`Error fetching data for symbol: ${symbol}`, error);
-      setShouldFetch(false); // Stop further fetching on error
-      return { close: null, symbol };
+      return { close: null, symbol }; // Return fallback
     }
   }, []);
 
+  // Fetch data for all stocks
   const fetchData = useCallback(async () => {
-    if (!shouldFetch) {
-      console.warn("Skipping fetch due to previous error.");
-      return;
-    }
-
     console.log("Fetching data for all stocks");
     const updatedStocks = await Promise.all(
       stocks.map(async (stock) => {
         const result = await fetchStockData(stock.Symbol);
         return {
           ...stock,
-          Price: result.close !== null ? result.close : stock.Price, // Use the price from dummyData if API call fails
+          Price: result.close !== null ? result.close : stock.Price,
         };
       })
     );
-    console.log("Updated Stocks:", updatedStocks); // Log updated stocks to verify state
-    setStocks(updatedStocks);
-  }, [stocks, fetchStockData, shouldFetch]);
 
+    // Only update stocks if the data changes
+    if (JSON.stringify(updatedStocks) !== JSON.stringify(stocks)) {
+      console.log("Stocks updated");
+      setStocks(updatedStocks);
+    } else {
+      console.log("No changes in stock data");
+    }
+  }, [stocks, fetchStockData]);
+
+  // Fetch data on mount and every 5 minutes
   useEffect(() => {
-    fetchData();
-    // Set interval to fetch data periodically (every 5 minutes)
-    const interval = setInterval(fetchData, 300000); // 300000 ms = 5 minutes
-    return () => clearInterval(interval);
+    fetchData(); // Initial fetch
+    const interval = setInterval(() => {
+      fetchData();
+    }, 300000); // Every 5 minutes
+    return () => clearInterval(interval); // Cleanup interval
   }, [fetchData]);
 
+  // Add a new stock
   const handleAddStock = (stock) => {
     setStocks([...stocks, stock]);
   };
 
+  // Delete a stock
   const handleDeleteStock = (index) => {
     const newStocks = stocks.filter((_, i) => i !== index);
     setStocks(newStocks);
   };
 
+  // Refresh stock data
   const handleRefresh = () => {
     fetchData();
   };
 
+  // Sort stocks
   const sortedStocks = [...stocks].sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key]) {
       return sortConfig.direction === "ascending" ? -1 : 1;
@@ -144,28 +122,16 @@ function App() {
 
   return (
     <Router>
-      <div className="MainApp" >
+      <div className="MainApp">
         <Header />
         <nav className="navBar">
           <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/portfolio">Portfolio</Link>
-            </li>
-            <li>
-              <Link to="/pnl">P&L</Link>
-            </li>
-            <li>
-              <Link to="/dividend">Dividend</Link>
-            </li>
-            <li>
-              <Link to="/news">News</Link>
-            </li>
-            <li>
-              <Link to="/contactus">Contact Us</Link>
-            </li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/portfolio">Portfolio</Link></li>
+            <li><Link to="/pnl">P&L</Link></li>
+            <li><Link to="/dividend">Dividend</Link></li>
+            <li><Link to="/news">News</Link></li>
+            <li><Link to="/contactus">Contact Us</Link></li>
           </ul>
         </nav>
         <Routes>
@@ -173,10 +139,7 @@ function App() {
             path="/"
             element={
               <div className="homeBar">
-                <div>
-                  Welcome to the <br />
-                  Stock Portfolio App!
-                </div>
+                <div>Welcome to the <br />Stock Portfolio App!</div>
                 <img
                   src={stockPortfolioImage}
                   alt="Stock Portfolio"
