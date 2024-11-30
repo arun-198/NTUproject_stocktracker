@@ -42,7 +42,7 @@ npm run start
 
 
 ### Demo
-<video controls src="Demo/StockPortfolio_S.mp4" title="Title" width="640" height="360"></video>
+<video controls src="Demo/StockPortfolio_S2.mp4" title="Title" width="640" height="360"></video>
 
 ## Authors
 1. [Lina](https://github.com/toddlerCoder007)
