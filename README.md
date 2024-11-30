@@ -42,7 +42,7 @@ npm run start
 
 
 ### Demo
-<video controls src="Demo/StockPortfolio_S2.mp4" title="Title" width="640" height="360"></video>
+![Demo Gif](Demo/StockPortfolio_S2.gif)
 
 ## Authors
 1. [Lina](https://github.com/toddlerCoder007)
