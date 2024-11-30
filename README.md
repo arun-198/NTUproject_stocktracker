@@ -45,6 +45,7 @@ npm run start
 ![Demo Gif](Demo/StockPortfolio_S2.gif)
 
 ## Authors
-1. [Lina](https://github.com/toddlerCoder007)
-2. [Chow](https://github.com/ChowNUSISS)
-3. [Yi Chen](https://github.com/yeyehandsome1984)
+1. [Arun](https://github.com/arun-198)
+2. [Lina](https://github.com/toddlerCoder007)
+3. [Chow](https://github.com/ChowNUSISS)
+4. [Yi Chen](https://github.com/yeyehandsome1984)
