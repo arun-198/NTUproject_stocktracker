@@ -1,14 +1,14 @@
 
 .table {
-    margin: 20px 240px;
+    margin: 3rem auto;
     font-family: sans-serif;
     table-layout: fixed;
     border-collapse: collapse;
-    margin-top: 3rem;
+    width: 50%;
   }
   .table thead tr {
-    background-color: #a4bae2;
-    color: #000000;
+    background-color: #0da7a7;
+    color: #ffffff;
     text-align: center;
     margin: 1rem auto;
     font-weight: bold;
@@ -29,16 +29,17 @@
   #newsTitle {
     font-size: 17px;
     font-weight: bold;
-    height: 85px;
+    height: 55px;
   }
   #newsSummary {
     font-size: 15px;
     font-style: italic;
-    min-height: 150px;
+    min-height: 120px;
   }
 
   .table td {
     cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   .table td:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */

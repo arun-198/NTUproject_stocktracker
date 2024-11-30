@@ -1,0 +1,49 @@
+  .newsHeader{
+      font-size: 2em;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 50px;
+      
+  }
+
+  .newsSubheader {
+      font-style: italic;
+  }
+
+  .button {
+    min-width: 10rem;
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: #0da7a7; /* Make background transparent */
+    border: 2px solid transparent; /* Make border transparent */
+    border-radius: 10px;
+    color: white;
+    transition-duration: 0.3s;
+    align-self: center;
+  }
+  
+  .button:hover {
+    background-color: #31c9c1; /* Show background color on hover */
+    border-color: #31c9c1; /* Show border color on hover */
+    color: white;
+  }
+
+  .news-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows the items to wrap to the next line */
+    justify-content: center; /* Centers the items horizontally */
+    gap: 20px; /* Adds space between the items */
+    padding: 20px;
+  }
+  
+  .news-article {
+    flex: 1 1 300px; /* Allows items to grow and shrink, sets a base width */
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-width: 300px; /* Ensures a minimum width */
+    max-width: 300px; /* Ensures a maximum width */
+  }
+  
+  

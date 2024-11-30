@@ -1,0 +1,36 @@
+.portfolio {
+    margin: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+    text-align: left;
+  }
+  
+  
+  
+  .portfolioButton {
+    margin: 5px;
+    padding: 5px 10px;
+    color: white;
+    background-color: #0da7a7;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .portfolioButton:hover {
+    background-color: #31c9c1;
+  }
+  
